@@ -6,7 +6,44 @@ in case you've got issues with zone awareness, or some other reason for your clu
 
 ## requirements
 
+KSH93 has better arithmetics
+
     apt install ksh jq curl
+
+disable shards re-balance in Dev Tools
+
+```
+PUT /_cluster/settings
+{
+  "transient" : {
+    "cluster.routing.rebalance.enable": "none"
+  }
+}
+PUT /_cluster/settings
+{
+  "persistent" : {
+    "cluster.routing.rebalance.enable": "none"
+  }
+}
+```
+
+eventually allow more storage flexibility during shard relocations
+
+```
+PUT _cluster/settings
+{
+  "transient": {
+    "cluster.routing.allocation.disk.watermark.low": "90%",
+    "cluster.routing.allocation.disk.watermark.high": "93%",
+    "cluster.routing.allocation.disk.watermark.flood_stage": "96%",
+    "cluster.info.update.interval": "10m"
+  }
+}
+```
+
+and check
+
+    GET _cluster/settings?flat_settings=true
 
 ## install
 
