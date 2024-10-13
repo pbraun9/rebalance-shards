@@ -47,6 +47,7 @@ and check
 
 ## install
 
+    mkdir -p /data/
     cd /data/
     git clone https://github.com/pbraun9/rebalance-shards.git
 
@@ -62,6 +63,10 @@ and check
 ## usage
 
     cd /data/rebalance-shards/
+
+show unbalanced primary and replica shards
+
+    ./show-unbalanced-shards.ksh
 
 rebalance a single index for node storage optimization
 
