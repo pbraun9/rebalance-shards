@@ -98,7 +98,7 @@ move_primary() {
 
 	echo -e "\t --> pri ${new%%\.mdb.yandexcloud.net}"
 	if (( debug < 1 )); then
-		./reroute.ksh $idx $shard $tmp $new | sed 's/^/\t /' || exit 1
+		/data/rebalance-shards/reroute.ksh $idx $shard $tmp $new | sed 's/^/\t /' || exit 1
 		sleep 1
 	fi
 }
@@ -179,7 +179,7 @@ move_replica() {
 
 	echo -e "\t --> rep ${rep%%\.mdb.yandexcloud.net}"
 	if (( debug < 1 )); then
-		./reroute.ksh $idx $shard $tmp2 $rep | sed 's/^/\t /' || exit 1
+		/data/rebalance-shards/reroute.ksh $idx $shard $tmp2 $rep | sed 's/^/\t /' || exit 1
 		sleep 1
 	fi
 

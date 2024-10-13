@@ -2,7 +2,7 @@
 
 ## description
 
-in case you've got issues with zone awareness or some other reason for your cluster not to balance the shards properly, this set of scripts can help rebalance your shards manually.
+in case you've got issues with zone awareness, or some other reason for your cluster not to balance the shards properly, this set of scripts can help rebalance your shards manually.
 
 ## requirements
 
@@ -38,7 +38,7 @@ other optimizations
 
 ### maintain roll-overs
 
-enable a cron job to seek and rebalance newly created data-stream indices every 5 minute
+enable a cron job to seek and rebalance newly created data-stream indices every 5 minutes
 
     crontab -e
 
