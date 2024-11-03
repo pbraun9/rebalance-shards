@@ -7,6 +7,7 @@ mkdir -p /data/rebalance-shards/traces/
 cd /data/rebalance-shards/traces/
 
 #echo -n backup as leafs.old ...
+[[ ! -f leafs ]] && touch leafs
 mv -f leafs leafs.old
 
 #echo -n writing leafs ...
