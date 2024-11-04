@@ -5,7 +5,7 @@ max_reloc=2
 function wait_reloc {
 	reloc=`/data/rebalance-shards/show-shards.bash | grep RELOC`
 	while (( `echo "$reloc" | wc -l` >= max_reloc )); do
-		echo reached $max_reloc+ relocating shards, waiting 3 seconds
+		echo \ reached $max_reloc+ relocating shards, waiting 3 seconds
 		sleep 3
 		reloc=`/data/rebalance-shards/show-shards.bash | grep RELOC`
 	done
@@ -77,8 +77,8 @@ echo "$all_indices" | grep kb$ | awk '{print $3}' > all-indices.kb && echo \ all
 echo "$all_indices" | grep -E '[[:digit:]]+b$' | awk '{print $3}' > all-indices.b && echo \ all-indices.b
 echo
 
-#process_b
-#process_kb
-#process_mb
+process_b
+process_kb
+process_mb
 process_gb
 
