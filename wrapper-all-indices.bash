@@ -1,6 +1,11 @@
 #!/bin/bash
 
-max_reloc=2
+# GET _cat/nodes?v&s=name | grep data
+(( nodes_num = 9 ))
+
+(( max_reloc = nodes_num / 3 ))
+
+echo debug max_reloc is $max_reloc
 
 function wait_reloc {
 	reloc=`/data/rebalance-shards/show-shards.bash | grep RELOC`

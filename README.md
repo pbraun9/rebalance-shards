@@ -78,16 +78,34 @@ other optimizations
     load15m
     shards
 
+show relocating shards in a loop
+
+    watch "./show-shards.bash | grep RELOC"
+
+### check all leafs
+
+generate list of writing indices from datastreams
+
+    cd traces/
+    ../show-data-streams-leaf.bash > leafs
+
+and check all those are well balanced
+
+    for idx in `cat leafs`; do ../array-balance.ksh $idx load15m; sleep 1; done; unset idx
+
 ### maintain roll-overs
 
-enable a cron job to seek and rebalance newly created data-stream indices every 5 minutes
+enable a cron job to seek and rebalance newly created data-stream indices
 
     crontab -e
 
     # rebalance newly created data-stream indices
-    */5 * * * * /data/rebalance-shards/wrapper-leafs.bash >> /var/log/rebalance-leafs.log 2>&1
+    */15 * * * * /data/rebalance-shards/wrapper-new-leafs.bash >> /var/log/rebalance-leafs.log 2>&1
 
-### re-check once in a while
+### re-check all indices
+
+this is not absolutely necessary for datastreams, as only the writing index eats hardware resources,
+but it can be useful once in a while esp. for increasing search (read) performance
 
 rebalance all shards with optimization depending on index size
 -- beware this is only good for an already balanced cluster

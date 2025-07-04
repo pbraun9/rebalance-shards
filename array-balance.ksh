@@ -195,22 +195,16 @@ shards=`curl -fsSk "$endpoint/_cat/shards" -u $admin_user:$admin_passwd | grep -
 
 echo
 
-# no RELOCATING no UNASSIGNED
-#woo_shards=`echo "$shards" | grep -vE '[[:space:]]+[rp][[:space:]]+STARTED'` || true
-#[[ -n $woo_shards ]] && echo -e "error: can only handle STARTED shards:\n$woo_shards" && exit 1
-
-# no UNASSIGNED
+# we are ok with RELOCATING but won't proceed if there's any UNASSIGNED shard
 woo_shards=`echo "$shards" | grep -E '[[:space:]]+[rp][[:space:]]+UNASSIGNED'` || true
-[[ -n $woo_shards ]] && echo -e "error: can only handle UNASSIGNED shards just yet:\n$woo_shards" && exit 1
-
-#pri_shards=`echo "$shards" | grep -E '[[:space:]]+p[[:space:]]+STARTED' | awk '{print $8}'`
-#rep_shards=`echo "$shards" | grep -E '[[:space:]]+r[[:space:]]+STARTED' | awk '{print $8}'`
+[[ -n $woo_shards ]] && echo -e "error: cannot handle UNASSIGNED shards just yet:\n$woo_shards" && exit 1
 
 # if we handle both STARTED and RELOCATING then the shard count is fine,
 # as long as we made sure there aren't any other kind of shards there
 # TODO we avoided UNSASSIGNED but what about other possible kinds?
-pri_shards=`echo "$shards" | grep -E '[[:space:]]+p[[:space:]]+(STARTED|RELOCATING)' | awk '{print $8}'`
-rep_shards=`echo "$shards" | grep -E '[[:space:]]+r[[:space:]]+(STARTED|RELOCATING)' | awk '{print $8}'`
+# we need $NF not $8 to grab the node field, as the docs and store fields are sometimes empty
+pri_shards=`echo "$shards" | grep -E '[[:space:]]+p[[:space:]]+(STARTED|RELOCATING)' | awk '{print $NF}'`
+rep_shards=`echo "$shards" | grep -E '[[:space:]]+r[[:space:]]+(STARTED|RELOCATING)' | awk '{print $NF}'`
 
 typeset -a cur_nodes=( $pri_shards )
 typeset -a rep_nodes=( $rep_shards )
@@ -445,7 +439,7 @@ until (( shard >= count_cur_nodes )); do
 
 	unset tmp tmp2
 done
-echo
+#echo
 
 if (( debug > 0 )); then
 	#echo DEBUG dest_nodes ${dest_nodes[@]}
