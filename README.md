@@ -27,7 +27,7 @@ PUT /_cluster/settings
 }
 ```
 
-eventually allow more storage flexibility during shard relocations
+eventually allow more storage flexibility during bulk shard relocations
 
 ```
 PUT _cluster/settings
@@ -78,9 +78,9 @@ other optimizations
     load15m
     shards
 
-show relocating shards in a loop
+show relocating (and unassigned) shards in a loop
 
-    watch "./show-shards.bash | grep RELOC"
+    watch "./show-shards.bash | grep -v STARTED"
 
 ### check all leafs
 
@@ -99,8 +99,8 @@ enable a cron job to seek and rebalance newly created data-stream indices
 
     crontab -e
 
-    # rebalance newly created data-stream indices
-    */15 * * * * /data/rebalance-shards/wrapper-new-leafs.bash >> /var/log/rebalance-leafs.log 2>&1
+    # rebalance newly created datastream indices
+    */15 * * * * /data/rebalance-shards/wrapper-new-leafs.bash >> /var/log/rebalance-leafs.log
 
 ### re-check all indices
 
@@ -112,4 +112,8 @@ rebalance all shards with optimization depending on index size
 -- otherwise it can create an enormous amount of relocations and cause disruption
 
     ./wrapper-all-indices.bash
+
+and to rebalance only writing indices from datastreams
+
+    ./wrapper-leaf-indices.bash
 

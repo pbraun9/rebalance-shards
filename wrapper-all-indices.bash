@@ -68,7 +68,6 @@ cd traces/
 # TODO for now those need to be balance manually - also check/rebalance those with this wrapper
 all_indices=`../show-indices.bash | grep -vE ' .kibana| .opendistro| .opensearch| .ql-| .mdb| .plugins'`
 
-echo
 echo check for non-supported size types
 tmp=`echo "$all_indices" | grep -vE 'gb$|mb$|kb$|[[:digit:]]+b$'`
 [[ -n $tmp ]] && echo -e "found:\n$tmp" && exit 1

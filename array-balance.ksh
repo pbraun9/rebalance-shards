@@ -193,8 +193,6 @@ move_replica() {
 
 shards=`curl -fsSk "$endpoint/_cat/shards" -u $admin_user:$admin_passwd | grep -E "^$idx[[:space:]]+"`
 
-echo
-
 # we are ok with RELOCATING but won't proceed if there's any UNASSIGNED shard
 woo_shards=`echo "$shards" | grep -E '[[:space:]]+[rp][[:space:]]+UNASSIGNED'` || true
 [[ -n $woo_shards ]] && echo -e "error: cannot handle UNASSIGNED shards just yet:\n$woo_shards" && exit 1
@@ -439,7 +437,7 @@ until (( shard >= count_cur_nodes )); do
 
 	unset tmp tmp2
 done
-#echo
+echo
 
 if (( debug > 0 )); then
 	#echo DEBUG dest_nodes ${dest_nodes[@]}

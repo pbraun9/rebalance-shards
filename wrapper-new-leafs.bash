@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#debug=1
+debug=1
 
 [[ ! -d /data/rebalance-shards/ ]] && echo install rebalance-shards first && exit 1
 
