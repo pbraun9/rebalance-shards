@@ -65,7 +65,8 @@ mkdir -p traces/
 cd traces/
 
 # exclude generic indices which have more than 1 replica
-# TODO for now those need to be balance manually - also check/rebalance those with this wrapper
+# todo - for now those need to be balanced manually - also check/rebalance those with this wrapper
+# todo - workaround the index display limit
 all_indices=`../show-indices.bash | grep -vE ' .kibana| .opendistro| .opensearch| .ql-| .mdb| .plugins'`
 
 echo check for non-supported size types
