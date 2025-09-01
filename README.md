@@ -111,9 +111,9 @@ rebalance all shards with optimization depending on index size
 -- beware this is only good for an already balanced cluster
 -- otherwise it can create an enormous amount of relocations and cause disruption
 
-    ./wrapper-all-indices.bash
+    time ./wrapper-all-indices2.bash
 
 and to rebalance only writing indices from datastreams
 
-    ./wrapper-leaf-indices.bash
+    time ./wrapper-leaf-indices.bash
 

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#tune=load15m
+tune=shards
+
 # GET _cat/nodes?v&s=name | grep data
 (( nodes_num = 9 ))
 
@@ -24,7 +27,7 @@ leaf_indices=`../show-data-streams-leaf.bash`
 
 for idx in $leaf_indices; do
 	wait_reloc
-	../array-balance.ksh $idx load15m
+	../array-balance.ksh $idx $tune
 done; unset idx
 echo
 
